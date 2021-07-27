@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+   <!--
+   About Us
+   Author: Adam Rhoades
+   Date:   9/23/2019
+   Filename: MIA_about.html
+   -->
+   
+        <title>Magnate Streaming Service</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />  
+        <link rel="stylesheet" href="css/tf_styles1.css">
+        <link rel="stylesheet" href="css/tf_flex.css">
+        <link rel="stylesheet" href="css/tf_reset.css">
+        <link rel="stylesheet" href="css/tf_navicon.css">
+   <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyDp78n7TxHFpC4Fq231QVdNUwf0lYlsf88"
+            type="text/javascript">
+	</script>
+	<script type="text/javascript">
+	//<![CDATA[
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+    </head>
+    <body >
+        
+        <script>
+            sessionStorage.setItem("signout", "out");
+        </script>
+        <header>
+            <a href="MSS_Home.html" ><img src="img/kimlogobanner.png" alt="Magnate Streaming Service" style="background:center no-repeat; max-width:300px;
+            max-height:200px;
+            width:auto;
+            height:auto;"></a>
+      
+            <nav class="horizontal">
+                <a id="navicon" href="#" style="width:30px;height:30;"><img src="img/tf_navicon.png" alt=""></a>
+                <ul class="mainmenu" style="margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+                    <li><a href="MSS_Home.html" style="width: auto;  margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Home</a></li>
+                    <li><a href="MSS_Movie.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Movies</a></li>
+                    <li><a href="MSS_Podcast.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Podcast</a></li>
+                    <li><a href="MSS_Music.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Music</a></li>
+                    <li><a href="MSS_Upload.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Upload</a></li>
+                    <li><a href="MSS_MngUpload.html" id="currentPage" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Manage Upload</a></li>
+                    <li><a href="MSS_Profile.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Profile</a></li>
+                    <li><a href="MSS_Manage_Payment.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Manage Payment</a></li>
+                    <li><a href="Login.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Sign-Out</a></li>
+		</ul>
+            </nav>
+        </header>
+        
+        <section style="background: rgb(0,0,0); width:110%;" >
+            <h1 id="umov" style="text-align: center;"></h1>
+            <div class="row" id="umovies" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="upod" style="text-align: center;"></h1>
+            <div class="row" id="upodcasts" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="umus" style="text-align: center;"></h1>
+            <div class="row" id="umusic" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div>
+
+            
+            <h1 id="tmov" style="text-align: center;"></h1>
+            <div class="row" id="movies" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="tpod" style="text-align: center;"></h1>
+            <div class="row" id="podcasts" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="tmus" style="text-align: center;"></h1>
+            <div class="row" id="music" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div>
+        
+            
+    </section>
+         <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
+        <script>
+            
+            
+            
+            
+            var firebaseConfig = {
+                apiKey: "AIzaSyBKpk7-U_TkE3IApTOZFSMNIXuOg-PYPFs",
+                authDomain: "kims-streamer.firebaseapp.com",
+                databaseURL: "https://kims-streamer-default-rtdb.firebaseio.com",
+                projectId: "kims-streamer",
+                storageBucket: "kims-streamer.appspot.com",
+                messagingSenderId: "1059071438295",
+                appId: "1:1059071438295:web:71a7266e044585eb61ef92",
+                measurementId: "G-J3LQRTX4SH"
+            };
+                                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                firebase.analytics();
+            var user = sessionStorage.getItem("user");
+            function doqueryM(){
+                
+                var umovies = document.getElementById('umovies');
+                umovies.innerHTML = '';
+                var header = document.getElementById('umov');
+                header.innerHTML = "";
+                umovies.background = "rgb(0,0,0)";
+                var umov = 0;
+                var str="";
+                var query = firebase.database().ref().child('uploads/Movie');
+                query.orderByChild('author').equalTo(user).once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                                if(umov == 0){
+                                    umov = 1;
+                                    
+                                    header.innerHTML = "Movies";
+                                    header.style.color = "rgb(255,255,255)";
+
+                                }
+                                //var author = childSnapshot.val().author;
+                                var icon = childSnapshot.val().imageUrl;
+                                //var type = childSnapshot.val().fileType;
+                                //var video = childSnapshot.val().fileUrl;
+                                var title = childSnapshot.val().name;
+                                var itemx = document.createElement('img');
+                                var div = document.createElement('div');
+                                var itemt = document.createElement('p');
+                                var file8 = childSnapshot.val().fileUrl
+                                div.id = "item";
+                                div.className = "column";
+                                div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                                itemx.id = "id";
+                                itemx.className = "class";
+                                itemx.style.background = "rgb(0,0,0)";
+                                itemx.style = 'height:150px;width:150px;';
+                                itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                                itemt.innerHTML = title;
+                                itemt.style.color = "rgb(255,255,255)";
+
+                                itemx.src = icon;
+                                div.appendChild(itemx);
+                                div.appendChild(itemt);
+                                umovies.appendChild(div);
+                                itemx.onclick = function() { 
+                                    sessionStorage.setItem("title", title);
+                                    sessionStorage.setItem("icon", icon);
+                                    sessionStorage.setItem("file", file8);
+                                    sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                    sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                    sessionStorage.setItem("count", childSnapshot.val().count);
+                                    sessionStorage.setItem("author", childSnapshot.val().author);
+                                    sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                    sessionStorage.setItem("p", 0);
+                                    var del = childSnapshot.key
+                                    var test = confirm('Are you sure you want to delete this?');
+                                    if(test){
+                                        firebase.database().ref().child('uploads/Movie').child(del).remove().then(() => {
+                                            var desertRef = firebase.storage().refFromURL(icon);
+
+                                      // Delete the file
+                                            desertRef.delete().then(() => {
+                                                var desertRef = firebase.storage().refFromURL(file8);
+                                        // File deleted successfully
+                                                desertRef.delete().then(() => {
+                                                    // File deleted successfully
+                                                    doqueryM();
+                                                });
+                                            });
+                                        });
+                                    } 
+                                    else{
+                                        
+                                    }
+                                };
+
+                    });
+                });
+
+            };
+            
+            function doqueryP(){
+                var upodcasts = document.getElementById('upodcasts');
+                upodcasts.innerHTML = "";
+                upodcasts.background = "rgb(0,0,0)";
+                var header = document.getElementById('upod');
+                                header.innerHTML = "";
+                var upod = 0;
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('author').equalTo(user).once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                            if(upod == 0){
+                                upod = 1;
+                                
+                                header.innerHTML = "Podcasts";
+                                header.style.color = "rgb(255,255,255)";
+
+                            }
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                            var file8 = childSnapshot.val().fileUrl
+                            //var type = childSnapshot.val().fileType;
+                            //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+                            upodcasts.appendChild(div);
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("p", 0);
+                                var del = childSnapshot.key
+                                    var test = confirm('Are you sure you want to delete this?');
+                                    if(test){
+                                        firebase.database().ref().child('uploads/Podcast').child(del).remove().then(() => {
+                                            var desertRef = firebase.storage().refFromURL(icon);
+
+                                      // Delete the file
+                                            desertRef.delete().then(() => {
+                                                var desertRef = firebase.storage().refFromURL(file8);
+                                        // File deleted successfully
+                                                desertRef.delete().then(() => {
+                                                    // File deleted successfully
+                                                    doqueryP();
+                                                });
+                                            });
+                                        });
+                                    } 
+                                    else{
+                                        
+                                    }
+
+                            };
+
+                    });
+                });
+
+            };
+            
+            function doqueryMu(){
+                var umusic = document.getElementById('umusic');
+                umusic.innerHTML = "";
+                umusic.background = "rgb(0,0,0)";
+                var header = document.getElementById('umus');
+                            header.innerHTML = "";
+                var umus = 0;
+                var query = firebase.database().ref().child('uploads/Music');
+                query.orderByChild('author').equalTo(user).once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                        if(umus == 0){
+                            umus = 1;
+                            
+                            header.innerHTML = "Music";
+                            header.style.color = "rgb(255,255,255)";
+                        }
+                        //var author = childSnapshot.val().author;
+                        var icon = childSnapshot.val().imageUrl;
+                        var file8 = childSnapshot.val().fileUrl
+                        //var type = childSnapshot.val().fileType;
+                        //var video = childSnapshot.val().fileUrl;
+                        var title = childSnapshot.val().name;
+                        var itemx = document.createElement('img');
+                        var div = document.createElement('div');
+                        var itemt = document.createElement('p');
+                        div.id = "item";
+                        div.className = "column";
+                        div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                        itemx.id = "id";
+                        itemx.className = "class";
+                        itemx.style.background = "rgb(0,0,0)";
+                        itemx.style = 'height:150px; width:150px;';
+                        itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                        itemt.innerHTML = title;
+                        itemt.style.color = "rgb(255,255,255)";
+
+                        itemx.src = icon;
+                        div.appendChild(itemx);
+                        div.appendChild(itemt);
+                        umusic.appendChild(div);
+                        itemx.onclick = function() { 
+                            sessionStorage.setItem("title", title);
+                            sessionStorage.setItem("icon", icon);
+                            sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                            sessionStorage.setItem("detail", childSnapshot.val().descript);
+                            sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                            sessionStorage.setItem("count", childSnapshot.val().count);
+                            sessionStorage.setItem("author", childSnapshot.val().author);
+                            sessionStorage.setItem("type", childSnapshot.val().fileType);
+                            sessionStorage.setItem("p", 0);
+                            var del = childSnapshot.key
+                                    var test = confirm('Are you sure you want to delete this?');
+                                    if(test){
+                                        firebase.database().ref().child('uploads/Music').child(del).remove().then(() => {
+                                            var desertRef = firebase.storage().refFromURL(icon);
+
+                                      // Delete the file
+                                            desertRef.delete().then(() => {
+                                                var desertRef = firebase.storage().refFromURL(file8);
+                                        // File deleted successfully
+                                                desertRef.delete().then(() => {
+                                                    // File deleted successfully
+                                                    doqueryMu();
+                                                });
+                                            });
+                                        });
+                                    } 
+                                    else{
+                                        
+                                    }
+                            
+                        };    
+                });
+            });   
+            }; 
+            doqueryM();
+            doqueryP();
+            doqueryMu();
+            
+        </script>
+            
+   
+   <!--<section>
+		<script type="text/javascript" src="firebase.js">
+		<script type="text/javascript" src="test1.js">
+   </section>-->
+        
+        
+        
+   
+        <footer  style="height:50px">
+            <a href="" class="facebook"><i class="fa fa-facebook" ></i></a>
+            <a href="" class="fa fa-google" id="google"></a>
+        </footer>
+    </body>
+</html>

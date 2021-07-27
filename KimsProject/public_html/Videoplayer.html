@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <video id="video" style="width: 100%; height: 100%;" controls>
+            <source id="source">
+            error cant load
+        </video>
+        <script>
+            var vid = document.getElementById('video');
+            var sor = document.getElementById('source');
+            var file = sessionStorage.getItem("file");
+            alert(file);
+            url = file.substr(1 + file.lastIndexOf("/"));
+alert(url);
+    // Break URL at ? and take first part (file name, extension)
+    url = file.split('?')[0];
+alert(url);
+    // Sometimes URL doesn't have ? but #, so we should aslo do the same for #
+    url = file.split('#')[0];
+    alert(url);
+            sor.setAttribute('src', file);
+            vid.load();
+            vid.play();
+        </script>
+        
+        
+    </body>
+</html>

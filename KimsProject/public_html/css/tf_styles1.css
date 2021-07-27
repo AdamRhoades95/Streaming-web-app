@@ -1,0 +1,313 @@
+@charset "utf-8";
+
+
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float:left;
+  padding: 90px 20px 0px 260px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  width:100%
+}
+
+.productColumn {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.productRow::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Style all font awesome icons */
+.fa {
+	padding-top:9px;
+	padding-right:10px;
+	padding-left:10px;
+	padding-bottom:10px;
+    font-size:20px;
+    text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+  background: rgb(0 ,0 ,0);
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-google {
+  background: rgb(238, 8, 27);
+  color: white;
+}
+
+/* HTML and Body Styles */
+
+html {
+   /*background: url(tf_back1.png) center center / cover no-repeat fixed;*/
+   height: 100%;
+   width:100%;
+   font-family: Verdana, Geneva, sans-serif;
+   font-size: 12px;
+   background: rgb(0, 0, 0);  
+}
+
+body {
+   /*background: rgb(190, 159, 91);   
+   box-shadow: rgb(51, 51, 51) 5px 0px 15px,
+               rgb(51, 51, 51) -5px 0px 15px;
+   margin: 0px auto;
+   min-height: 100%;
+   min-width: 320px;
+   max-width: 1024px;
+   width: 100%;*/
+   width: 100%;
+   margin: 0px auto;
+}
+
+
+/* Body Header Styles */
+
+body header {
+   background: rgb(0,0,0);   
+}
+
+body header img {
+   display: block;
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+
+}
+
+/* Horizonal Navigation Styles */
+
+nav.horizontal {
+   background-color: rgb(145,97,39);
+   clear: both;
+   text-align: center;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+nav.horizontal li {
+   color: rgb(31, 73, 125);
+   font-size: 1.1 em;
+   line-height: 2em;
+   text-align: center;
+   padding: 0px 0px 0px 0px;
+   margin: 0px 0px 0px 0px;
+   text-transform: uppercase;
+   margin: auto;
+   font-weight: bold;
+   display: inline-block;
+}
+
+nav.horizontal ul li a {
+   display: block;
+}
+
+nav.horizontal ul li a#currentPage {
+   background-color:rgb(0,0,0);
+   color: rgb(255,255,255);
+   font-weight: bold;
+   text-align: center;
+}
+
+nav.horizontal ul li a:visited, nav.horizontal ul li a:link {
+   color: rgb(0,0,0);
+   font-weight: bold;
+   background-color: rgb(145,97,39);
+   text-align: center;
+}
+
+nav.horizontal ul li a:hover, nav.horizontal ul li a:active {
+   background-color:rgb(0,0,0);
+   color: rgb(255,255,255);
+   font-weight: bold;
+   text-align: center;
+}
+
+/* Main Menu Styles */
+
+ul.mainmenu {
+	font-size: 0.8 em;
+		padding: 5px 10px px 10px;
+		margin: 0 auto;
+		float: center;
+		display: inline-block;
+		text-align: center;
+		line-height: 0.8 em;
+		list-style-type: none;
+   
+}
+
+ul.mainmenu > li {
+   /*text-indent: 15px;*/
+}
+
+ul.mainmenu > li:first-of-type a {
+   color: white;
+   
+}
+
+/* Submenu Styles */
+
+ul.submenu {
+   width: 100%;
+   background-color: rgb(249,241,159);
+}
+
+
+/* Section Styles */
+
+section {
+   background-color: rgb(255, 255, 255);
+   clear: both;
+}
+
+section::after {
+   content: "";
+   display: table;
+   clear: both;
+}
+
+section img {
+   display: block;
+   width: 100%;
+}
+
+section p {
+   line-height: 1.4em;
+   padding: 10px;
+   font-size: 1.2em;
+}
+
+/* Aside Styles */
+
+aside {
+   display: block;
+   /*background-color: rgb(229, 230, 233);*/
+   text-align: center;
+   
+}
+
+/* Footer Styles */
+
+body > footer {
+   background-color: rgb(0,0,0);
+   font-size: 0.9em;
+   text-align: center;
+   padding: 10px;
+   width:100%;
+   
+}
+
+/* Pulldown Menu Styles */
+ul {
+   display: none;
+}
+a.submenuTitle:hover+ul.submenu, ul.submenu:hover{
+	display: block;
+}
+
+
+/* New Styles Added Below */
+/***********************************
+	Mobile device styles
+************************************/
+@media only screen and (max-width: 480px){
+	
+	nav.horizontal a{
+	  font-size: 0.875em;
+	  line-height: 2.2em;
+	}
+	aside{
+	  display: none;
+	}
+        /* Three image containers (use 25% for four, and 50% for two, etc) */
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+}
+
+/* Clear floats after image containers */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+}
+}
+/***********************************
+	Tablet device styles
+************************************/
+@media only screen and (min-width: 481px){
+	
+	ul.mainmenu > li{
+		/*position: relative;*/
+		font-size: 0.8 em;
+		padding: 0px -20px 0px 0px;
+		margin: 0px 0px 0px 0px;
+		display: inline-block;
+		text-align: center;
+		list-style-type: none;
+	}
+	ul.submenu{
+	  box-shadow: rgb(51,51,51) 5px 5px 15px;
+	  position: absolute;
+	  padding: 0px 0px 0px 0px;
+	  margin: 0px 0px 0px 0px;
+	}
+}
+/***********************************
+	Desktop device styles
+************************************/
+@media only screen and (min-width: 769px){
+	
+	ul.submenu{
+	  background  : transparent;
+	  box-shadow  : none;
+	  display     : block;
+	  position    : relative;
+	  width       : 100%;
+	}
+	nav.horizontal::after{
+	  clear       : both;
+	  content     : "";
+	  display     : table;
+	}
+	nav.horizontal a.submenuTitle{
+	  display     : none;
+	}
+	
+	article {
+	  float       : left;
+	  margin-right: 5%;
+	  width       : 55%;
+	}	
+	aside {
+	  float       : left;
+	  width       : 40%;
+	}	
+	
+}

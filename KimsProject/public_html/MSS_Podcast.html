@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!--
+        Providers
+        Author: Adam Rhoades
+        Date:   6/5/2021
+   -->
+   
+   <title>Magnate Streaming Service</title>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />  
+   <link rel="stylesheet" href="css/tf_styles1.css">
+   <link rel="stylesheet" href="css/tf_flex.css">
+   <link rel="stylesheet" href="css/tf_reset.css">
+   <link rel="stylesheet" href="css/tf_navicon.css">
+   <!-- Add icon library -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <script>
+            sessionStorage.setItem("signout", "out");
+        </script>
+   <header>
+      <a href="MSS_Home.html" ><img src="img/kimlogobanner.png" alt="Magnate Streaming Service" style="background:center no-repeat; max-width:300px;
+    max-height:200px;
+    width:auto;
+    height:auto;"></a>
+      
+      <nav class="horizontal">
+         <a id="navicon" href="#" style="width:30px;height:30;"><img src="img/tf_navicon.png" alt=""></a>
+         <ul class="mainmenu" style="margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+            <li><a href="MSS_Home.html" style="width: auto;  margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Home</a></li>
+            <li><a href="MSS_Movie.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Movies</a></li>
+            <li><a href="MSS_Podcast.html" id="currentPage" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;">Podcast</a></li>
+            <li><a href="MSS_Music.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Music</a></li>
+            <li><a href="MSS_Upload.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Upload</a></li>
+            <li><a href="MSS_MngUpload.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Manage Upload</a></li>
+            <li><a href="MSS_Profile.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Profile</a></li>
+            <li><a href="MSS_Manage_Payment.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Manage Payment</a></li>
+            <li><a href="Login.html" style="width: auto; margin: 0px 0px 0px 0px;padding: 5px 5px 5px 5px;" >Sign-Out</a></li>
+	</ul>
+      </nav>
+   </header>
+    
+    <section style="background: rgb(0,0,0); width:110%;" >
+        <div style="width: 200px; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;">
+            <input style="width:200px; margin:5px 5px 5px 5px;" name="custday" id="search" type="text" placeholder="search"  />
+                <button style="height: 25px; margin:5px 5px 5px 5px;;" type="button" class="cancelbtn" id="create" onclick="searchPodcast()">Search</button>
+        </div>    
+        <h1 id="searchpod" style="text-align: center;"></h1>
+        <div class="row" id="seaPodcast" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+        
+            <h1 id="umov" style="text-align: center;"></h1>
+            <div class="row" id="umovies" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="upod" style="text-align: center;"></h1>
+            <div class="row" id="upodcasts" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="umus" style="text-align: center;"></h1>
+            <div class="row" id="umusic" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div>
+
+            <h1 id="tmov" style="text-align: center;"></h1>
+            <div class="row" id="movies" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="tpod" style="text-align: center;"></h1>
+            <div class="row" id="podcasts" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="tmus" style="text-align: center;"></h1>
+            <div class="row" id="music" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div>
+        
+            
+            <h1 id="pod1" style="text-align: center;"></h1>
+            <div class="row" id="podcasts1" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="pod2" style="text-align: center;"></h1>
+            <div class="row" id="podcasts2" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="pod3" style="text-align: center;"></h1>
+            <div class="row" id="podcasts3" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="tpod4" style="text-align: center;"></h1>
+            <div class="row" id="podcasts4" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+            <h1 id="pod5" style="text-align: center;"></h1>
+            <div class="row" id="podcasts5" style="background: rgb(0,0,0); width:100%; display: flex; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; padding: 0px;"></div><br>
+            
+    </section>
+         <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyBKpk7-U_TkE3IApTOZFSMNIXuOg-PYPFs",
+                authDomain: "kims-streamer.firebaseapp.com",
+                databaseURL: "https://kims-streamer-default-rtdb.firebaseio.com",
+                projectId: "kims-streamer",
+                storageBucket: "kims-streamer.appspot.com",
+                messagingSenderId: "1059071438295",
+                appId: "1:1059071438295:web:71a7266e044585eb61ef92",
+                measurementId: "G-J3LQRTX4SH"
+            };
+                                // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+            var user = "_"+sessionStorage.getItem("user")+"_";
+            var username = sessionStorage.getItem("user");
+            
+            var upodcasts = document.getElementById('upodcasts');
+            upodcasts.background = "rgb(0,0,0)";
+            var upod = 0;
+            var query = firebase.database().ref().child('uploads/Podcast');
+            query.once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var str = childSnapshot.val().viewers;
+                    if(str.includes(user)){
+                    
+                        if(upod == 0){
+                            upod = 1;
+                            var header = document.getElementById('upod');
+                            header.innerHTML = "Your Podcasts";
+                            header.style.color = "rgb(255,255,255)";
+
+                        }
+                        //var author = childSnapshot.val().author;
+                        var icon = childSnapshot.val().imageUrl;
+                        //var type = childSnapshot.val().fileType;
+                        //var video = childSnapshot.val().fileUrl;
+                        var title = childSnapshot.val().name;
+                        var itemx = document.createElement('img');
+                        var div = document.createElement('div');
+                        var itemt = document.createElement('p');
+                        div.id = "item";
+                        div.className = "column";
+                        div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                        itemx.id = "id";
+                        itemx.className = "class";
+                        itemx.style.background = "rgb(0,0,0)";
+                        itemx.style = 'height:150px;width:150px;';
+                        itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                        itemt.innerHTML = title;
+                        itemt.style.color = "rgb(255,255,255)";
+
+                        itemx.src = icon;
+                        div.appendChild(itemx);
+                        div.appendChild(itemt);
+                        upodcasts.appendChild(div);
+                        itemx.onclick = function() { 
+                            sessionStorage.setItem("title", title);
+                            sessionStorage.setItem("icon", icon);
+                            sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                            sessionStorage.setItem("detail", childSnapshot.val().descript);
+                            sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                            sessionStorage.setItem("count", childSnapshot.val().count);
+                            sessionStorage.setItem("author", childSnapshot.val().author);
+                            sessionStorage.setItem("type", childSnapshot.val().fileType);
+                            sessionStorage.setItem("p", 1);
+                            sessionStorage.setItem("tags", childSnapshot.val().tags);
+                            window.location.href = "MusicChoice.html";
+                        };
+                    }    
+                });
+            });
+            
+            
+            var podcasts = document.getElementById('podcasts');
+            podcasts.background = "rgb(0,0,0)";
+            var tpod = 0;
+            var query = firebase.database().ref().child('uploads/Podcast');
+            query.orderByChild('count').limitToFirst(25).once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    
+                    if(tpod == 0){
+                        tpod = 1;
+                        var header = document.getElementById('tpod');
+                        header.innerHTML = "Top Podcasts";
+                        header.style.color = "rgb(255,255,255)";
+                        
+                    }
+                    //var author = childSnapshot.val().author;
+                    var icon = childSnapshot.val().imageUrl;
+                    //var type = childSnapshot.val().fileType;
+                    //var video = childSnapshot.val().fileUrl;
+                    var title = childSnapshot.val().name;
+                    var itemx = document.createElement('img');
+                    var div = document.createElement('div');
+                    var itemt = document.createElement('p');
+                    div.id = "item";
+                    div.className = "column";
+                    div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                    itemx.id = "id";
+                    itemx.className = "class";
+                    itemx.style.background = "rgb(0,0,0)";
+                    itemx.style = 'height:150px;width:150px;';
+                    itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                    itemt.innerHTML = title;
+                    itemt.style.color = "rgb(255,255,255)";
+                    
+                    itemx.src = icon;
+                    div.appendChild(itemx);
+                    div.appendChild(itemt);
+                    podcasts.appendChild(div);
+                    
+                    itemx.onclick = function() { 
+                        sessionStorage.setItem("title", title);
+                        sessionStorage.setItem("icon", icon);
+                        sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                        sessionStorage.setItem("detail", childSnapshot.val().descript);
+                        sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                        sessionStorage.setItem("count", childSnapshot.val().count);
+                        sessionStorage.setItem("author", childSnapshot.val().author);
+                        sessionStorage.setItem("type", childSnapshot.val().fileType);
+                        sessionStorage.setItem("p", 1);
+                        sessionStorage.setItem("tags", childSnapshot.val().tags);
+                        window.location.href = "MusicChoice.html";
+                    };
+                });
+            });
+            
+            
+            var queryStr = "";
+            var query = firebase.database().ref().child('userProfileViews/'+ username);
+            query.child('Podcast').orderByValue().limitToFirst(5).once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    if (childSnapshot.key === "drama") {
+                        queryStr += "drama";
+                    }
+                    else if (childSnapshot.key==="comedy") {
+                        queryStr += "comedy";
+                    } else if (childSnapshot.key === "thriller") {
+                        queryStr += "thriller";
+                    } else if (childSnapshot.key === "romance") {
+                        queryStr += "romance";
+                    } else if (childSnapshot.key === "action") {
+                        queryStr += "action";
+                    } else if (childSnapshot.key === "horror") {
+                        queryStr += "horror";
+                    } else if (childSnapshot.key === "crime") {
+                        queryStr += "crime";
+                    } else if (childSnapshot.key === "adventure") {
+                        queryStr += "adventure";
+                    } else if (childSnapshot.key === "mystery") {
+                        queryStr += "mystery";
+                    } else if (childSnapshot.key === "family") {
+                        queryStr += "family";
+                    } else if (childSnapshot.key === "war") {
+                        queryStr += "war";
+                    } else if (childSnapshot.key === "eductational") {
+                        queryStr += "educational";
+                    } else if (childSnapshot.key === "history") {
+                        queryStr += "history";
+                    } else if (childSnapshot.key === "sciFi") {
+                        queryStr += "sciFi";
+                    } else if (childSnapshot.key === "musical") {
+                        queryStr += "musical";
+                    } else if (childSnapshot.key === "animation") {
+                        queryStr += "animation";
+                    } else if (childSnapshot.key === "sports") {
+                        queryStr += "sports";
+                    } else if (childSnapshot.key === "news") {
+                        queryStr += "news";
+                    } else if (childSnapshot.key === "other") {
+                        queryStr += "other";
+                    } else if (childSnapshot.key === "blues") {
+                        queryStr += "blues";
+                    } else if (childSnapshot.key === "classical") {
+                        queryStr += "classical";
+                    } else if (childSnapshot.key === "country") {
+                        queryStr += "country";
+                    } else if (childSnapshot.key === "jazz") {
+                        queryStr += "jazz";
+                    } else if (childSnapshot.key === "hiphop") {
+                        queryStr += "hiphop";
+                    } else if (childSnapshot.key === "soul") {
+                        queryStr += "soul";
+                    } else if (childSnapshot.key === "rock") {
+                        queryStr += "rock";
+                    } else if (childSnapshot.key === "pop") {
+                        queryStr += "pop";
+                    } else if (childSnapshot.key === "randB") {
+                        queryStr += "randB";
+                    } else if (childSnapshot.key === "latin") {
+                        queryStr += "latin";
+                    } else if (childSnapshot.key === "metal") {
+                        queryStr += "metal";
+                    } else if (childSnapshot.key === "rap") {
+                        queryStr += "rap";
+                    }
+                    queryStr += " ";
+                    
+                });
+                
+                
+                queryStr = queryStr.split(/(\s+)/);
+                oneOfFiveCat(queryStr[0].toString(),1);
+                oneOfFiveCat(queryStr[1].toString(),2);
+                oneOfFiveCat(queryStr[2].toString(),3);
+                oneOfFiveCat(queryStr[3].toString(),4);
+                oneOfFiveCat(queryStr[4].toString(),5);
+               
+            });
+            
+            function oneOfFiveCat(type, num){
+                var pod1 = 0;
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('tags').startAt(type).endAt(type + "\uf8ff").limitToFirst(25).once("value").then(function(snapshot) {
+                        snapshot.forEach(function(childSnapshot) {
+                            
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                            //var type = childSnapshot.val().fileType;
+                            //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+                            
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("p", 1);
+                                sessionStorage.setItem("tags", childSnapshot.val().tags);
+                                window.location.href = "MusicChoice.html";
+                            };
+                            
+                            if(num==1){
+                                if(pod1 == 0){
+                                    pod1 = 1;
+                                    var header = document.getElementById('pod1');
+                                    header.innerHTML = type;
+                                    header.style.color = "rgb(255,255,255)";    
+                                }
+                                var podcasts1 = document.getElementById('podcasts1');
+                                podcasts1.background = "rgb(0,0,0)";
+                                podcasts1.appendChild(div);
+                            }
+                            else if(num==2){
+                                if(pod1 == 0){
+                                    pod1 = 1;
+                                    var header = document.getElementById('pod2');
+                                    header.innerHTML = type;
+                                    header.style.color = "rgb(255,255,255)";
+                                }
+                                var podcasts2 = document.getElementById('podcasts2');
+                                podcasts2.background = "rgb(0,0,0)";
+                                podcasts2.appendChild(div);
+                            }
+                            else if(num==3){
+                                if(pod1 == 0){
+                                    pod1 = 1;
+                                    var header = document.getElementById('pod3');
+                                    header.innerHTML = type;
+                                    header.style.color = "rgb(255,255,255)";
+                                }
+                                var podcasts3 = document.getElementById('podcasts3');
+                                podcasts3.background = "rgb(0,0,0)";
+                                podcasts3.appendChild(div);
+                            }
+                            else if(num==4){
+                                if(pod1 == 0){
+                                    pod1 = 1;
+                                    var header = document.getElementById('pod4');
+                                    header.innerHTML = type;
+                                    header.style.color = "rgb(255,255,255)";
+                                }
+                                var podcasts4 = document.getElementById('podcasts4');
+                                podcasts4.background = "rgb(0,0,0)";
+                                podcasts4.appendChild(div);
+                            }
+                            else if(num==5){
+                                if(pod1 == 0){
+                                    pod1 = 1;
+                                    var header = document.getElementById('pod5');
+                                    header.innerHTML = type;
+                                    header.style.color = "rgb(255,255,255)";
+                                }
+                                var podcasts5 = document.getElementById('podcasts5');
+                                podcasts5.background = "rgb(0,0,0)";
+                                podcasts5.appendChild(div);
+                            }
+                            
+                        });
+                    });
+            };
+            
+            
+            function searchPodcast(){
+                var podsea = 0;
+                var searchitems = "";
+                var search = document.getElementById('search').value;
+                var podcastssea = document.getElementById('seaPodcast');
+                podcastssea.background = "rgb(0,0,0)";
+                podcastssea.innerHTML = '';
+                var header = document.getElementById('searchpod');
+                header.innerHTML = "";
+                header.innerHTML = "No Items matched your Search";
+                
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('tags').startAt(search).endAt(search + "\uf8ff").once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        if(!searchitems.includes(childSnapshot.val().fileUrl)){
+                            searchitems += childSnapshot.val().fileUrl;
+                            if(podsea == 0){
+                                podsea = 1;
+                                header.innerHTML = "Search";
+                                header.style.color = "rgb(255,255,255)";    
+                            }
+                                
+                               
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                                //var type = childSnapshot.val().fileType;
+                                //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("p", 1);
+                                sessionStorage.setItem("tags", childSnapshot.val().tags);
+                                window.location.href = "MusicChoice.html";
+                            };
+                            podcastssea.appendChild(div); 
+                        }    
+                            
+                                
+                    });
+                });
+            
+                
+                
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('name').startAt(search).endAt(search + "\uf8ff").once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        if(!searchitems.includes(childSnapshot.val().fileUrl)){
+                            searchitems += childSnapshot.val().fileUrl + " ";
+                            if(podsea == 0){
+                                podsea = 1;
+                                header.innerHTML = "Search";
+                                header.style.color = "rgb(255,255,255)";    
+                            }
+                                
+                               
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                                //var type = childSnapshot.val().fileType;
+                                //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("p", 1);
+                                sessionStorage.setItem("tags", childSnapshot.val().tags);
+                                window.location.href = "MusicChoice.html";
+                            };
+                            podcastssea.appendChild(div); 
+                        }    
+                            
+                                
+                    });
+                });
+            
+            
+            
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('descript').startAt(search).endAt(search + "\uf8ff").once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        if(!searchitems.includes(childSnapshot.val().fileUrl)){
+                            searchitems += childSnapshot.val().fileUrl;
+                            if(podsea == 0){
+                                podsea = 1;
+                                header.innerHTML = "Search";
+                                header.style.color = "rgb(255,255,255)";    
+                            }
+                                
+                               
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                                //var type = childSnapshot.val().fileType;
+                                //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("p", 1);
+                                sessionStorage.setItem("tags", childSnapshot.val().tags);
+                                window.location.href = "MusicChoice.html";
+                            };
+                            podcastssea.appendChild(div); 
+                        }    
+                            
+                                
+                    });
+                });
+            
+            
+            
+                var query = firebase.database().ref().child('uploads/Podcast');
+                query.orderByChild('author').startAt(search).endAt(search + "\uf8ff").once("value").then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        if(!searchitems.includes(childSnapshot.val().fileUrl)){
+                            searchitems += childSnapshot.val().fileUrl;
+                            if(podsea == 0){
+                                podsea = 1;
+                                header.innerHTML = "Search";
+                                header.style.color = "rgb(255,255,255)";    
+                            }
+                            //var author = childSnapshot.val().author;
+                            var icon = childSnapshot.val().imageUrl;
+                                //var type = childSnapshot.val().fileType;
+                                //var video = childSnapshot.val().fileUrl;
+                            var title = childSnapshot.val().name;
+                            var itemx = document.createElement('img');
+                            var div = document.createElement('div');
+                            var itemt = document.createElement('p');
+                            div.id = "item";
+                            div.className = "column";
+                            div.style = "text-align-last: center; text-align:center; text-align: center; margin: 2.5px;  padding:5px; height:auto; width: 150px; "
+                            itemx.id = "id";
+                            itemx.className = "class";
+                            itemx.style.background = "rgb(0,0,0)";
+                            itemx.style = 'height:150px;width:150px;';
+                            itemt.style = 'word-break: break-word; overflow: hidden; text-overflow: ellipsis;  text-align-last: center; text-align:center; padding: 0px; margin:0px;  height: auto; width:150px;';
+                            itemt.innerHTML = title;
+                            itemt.style.color = "rgb(255,255,255)";
+
+                            itemx.src = icon;
+                            div.appendChild(itemx);
+                            div.appendChild(itemt);
+
+                            itemx.onclick = function() { 
+                                sessionStorage.setItem("title", title);
+                                sessionStorage.setItem("icon", icon);
+                                sessionStorage.setItem("file", childSnapshot.val().fileUrl);
+                                sessionStorage.setItem("detail", childSnapshot.val().descript);
+                                sessionStorage.setItem("viewers", childSnapshot.val().viewers);
+                                sessionStorage.setItem("count", childSnapshot.val().count);
+                                sessionStorage.setItem("type", childSnapshot.val().fileType);
+                                sessionStorage.setItem("author", childSnapshot.val().author);
+                                sessionStorage.setItem("p", 1);
+                                sessionStorage.setItem("tags", childSnapshot.val().tags);
+                                window.location.href = "MusicChoice.html";
+                            };
+                            podcastssea.appendChild(div); 
+                        }    
+                            
+                                
+                    });
+                });
+                
+                
+            };
+            
+        </script>
+   
+   <footer  style="height:50px">
+        <a href="" class="facebook"><i class="fa fa-facebook" ></i></a>
+        <a href="" class="fa fa-google" id="google"></a>
+   </footer>
+</body>
+</html>

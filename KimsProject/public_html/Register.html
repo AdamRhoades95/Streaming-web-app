@@ -1,0 +1,395 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!doctype html>
+<html>
+    <head>
+        <!--
+
+        Contact Form
+        Author: Adam Rhoades
+        Date:   9/23/2019
+        Filename: MIA_contact.html
+
+        -->
+   
+        <title>Magnate Streaming Service</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />  
+        <link rel="stylesheet" href="css/tf_styles1.css">
+        <link rel="stylesheet" href="css/tf_flex.css">
+        <link rel="stylesheet" href="css/tf_reset.css">
+        <link rel="stylesheet" href="css/tf_navicon.css">
+        <link rel="stylesheet" href="css/rb_forms.css">
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    
+    <header>
+      
+        <img src="img/kimlogobanner.png" alt="Magnate Streaming Service" 
+             style="background:center no-repeat; max-width:300px;
+            max-height:200px;
+            width:auto;
+            height:auto;">
+   </header>
+   
+    <script>
+        sessionStorage.setItem("signout", "out");
+    </script>
+   <section style="width:100%;background-color: rgb(0,0,0); padding:20px 5px 20px 5px;">
+        <form style="width:300px; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0; " id="register" action="MIA_submit.php" method="post" >
+            <fieldset style="border-radius: 2%; background: rgb(255 ,255, 255) ;" id="userInfo">
+		<legend style="color:rgb(255,255,255); background: rgb(0 ,0, 0); font-weight: bold;">New User</legend>
+                    <h1 class="row" >Birth Date</h1>
+                    <div class="row" style="text-align: center; width:300px; display: flex;" >
+                        <div class="column" style="width:100px; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; "  >
+                            <label style="width:100px; margin:5px 5px 5px 5px;" for="day">Day*</label>
+                            <input style="width:50px;margin:5px 5px 5px 5px;" name="custday" id="day" type="text" placeholder="01-31" required />
+			</div>
+			<div class="column" style="width:100px; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px;">
+                            <label style="width:50px; margin:5px 5px 5px 5px;" for="month" >Month*</label>
+                            <input style="width:50px; margin:5px 5px 5px 5px;" name="custmonth" id="month" type="text" placeholder="01-12" required />
+			</div>
+			<div class="column" style="width:100px; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px;">
+                            <label style="width:50px; margin:5px 5px 5px 5px;" for="year">Year*</label>
+                            <input style="width:50px; margin:5px 5px 5px 5px;" name="custyear" id="year" type="text" placeholder="yyyy" required />
+			</div>
+                    </div>
+			
+			<div class="row" style="padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:280px;">
+				<label for="email">Email Address*</label>
+				<input name="custemail" id="email" type="email" required />
+			</div>
+			
+                    <div class="row" style="padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:280px;" >
+			<label for="username">Username*</label>
+			<input name="custusername" id="username" type="text" required />
+                    </div>
+                    <div class="row" style="padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:280px;" >
+			<label for="password">Password*</label>
+			<input name="custpassword" id="password" type="text" value="" required />
+                    </div>
+                    <h1 class="row" >Card Information</h1>
+                    <div class="row" style="padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:280px;">
+			<label for="cardholder" >Card Holder*</label>
+			<input name="custcardholder" id="cardholder" type="text" value="" required />
+                    </div>
+                    <div class="row" style="padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:280px;">
+			<label for="cardnumber">Card Number</label>
+			<input name="custcardnumber" id="cardnumber" type="text" pattern="^\d{5}(-\d{4})?$" />
+				
+                    </div>
+                    <div class="row" style="text-align: center; width:300px; display: flex;" >
+			<div class="column" style="width:150px; padding:5px 5px 5px 5px; margin:0px 5px 0px 5px;">
+                            <label style="margin:5px 5px 5px 5px;" for="CVC">CVV/CVN*</label>
+                            <input style="width:80px; margin:5px 5px 5px 5px;" name="custCVC" id="CVC" type="text" placeholder="021" required />
+			</div>
+                        <div class="column" style=" width:150px;padding:5px 5px 5px 5px; margin:0px 5px 0px 5px;">
+                            <label style="margin:5px 5px 5px 5px;" for="expo" >Experation Date*</label>
+                            <input style="width:130px; margin:5px 5px 5px 5px;" name="custexpo" id="expo" type="text" placeholder="mm-yyyy" required />
+                        </div>
+                    </div>
+						
+		</fieldset>		
+			
+		<div class="r1" style="max-width:400px;  padding-top:5px;">
+			<a ><button type="button" class="cancelbtn" id="create" onclick="upload()">Create</button></a>
+			<a href="Login.html" ><button type="button" class="cancelbtn">Cancel</button></a>
+		</div>
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-database.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBKpk7-U_TkE3IApTOZFSMNIXuOg-PYPFs",
+    authDomain: "kims-streamer.firebaseapp.com",
+    databaseURL: "https://kims-streamer-default-rtdb.firebaseio.com",
+    projectId: "kims-streamer",
+    storageBucket: "kims-streamer.appspot.com",
+    messagingSenderId: "1059071438295",
+    appId: "1:1059071438295:web:71a7266e044585eb61ef92",
+    measurementId: "G-J3LQRTX4SH"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  
+  function upload(){
+                    var day = document.getElementById('day').value;
+                    var month = document.getElementById('month').value;
+                    var year = document.getElementById('year').value;
+                    var email = document.getElementById('email').value;
+                    var username = document.getElementById('username').value;
+                    var password = document.getElementById('password').value;
+                    var cardnumber = document.getElementById('cardnumber').value;
+                    var cardholder = document.getElementById('cardholder').value;
+                    var CVC = document.getElementById('CVC').value;
+                    var expo = document.getElementById('expo').value;
+                    
+                    var today = new Date();
+                    var dd = today.getDate();
+
+                    var mm = today.getMonth()+1; 
+                    var yyyy = today.getFullYear();
+                    if(dd<10) 
+                    {
+                        dd=`0${dd}`;
+                    } 
+
+                    if(mm<10) 
+                    {
+                        mm=`0${mm}`;
+                    } 
+                    
+                    
+                    var startD = `${mm}/${dd}/${yyyy}`;
+                    //-----------------------
+                    today.setDate(today.getDate()+14)
+
+                    var mm = today.getMonth()+1; 
+                    var yyyy = today.getFullYear();;
+                    dd = today.getDate();
+                    mm = today.getMonth()+1; 
+                    yyyy = today.getFullYear();
+                    
+                    if(dd<10) 
+                    {
+                        dd=`0${dd}`;
+                    } 
+
+                    if(mm<10) 
+                    {
+                        mm=`0${mm}`;
+                    }
+                    var currentVD = `${mm}/${dd}/${yyyy}`;
+                    
+                    //console.log(today);
+                    
+                    
+                    
+                            document.getElementById('day').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('month').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('year').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('email').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('username').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('password').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('cardnumber').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('cardholder').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('CVC').style.background = "rgb(255,255,255)";
+
+                            document.getElementById('expo').style.background = "rgb(255,255,255)";
+                  
+                    //alert(password+ "  +  "+ username)
+                    if (day !== "" && month !== "" && year !== "" && email !== "" && username !== "" && password !== "" 
+                            && cardnumber !== "" && cardholder !== "" && CVC !== "" && expo !== ""){
+                        firebase.database().ref().child('usersprofile/').once('value',function(snapshot) {
+                            if(snapshot.hasChild(username)){
+                                document.getElementById('username').value = ""
+                                document.getElementById('username').style.background = "rgb(255,50,0)";
+                                document.getElementById('username').placeholder = "User Taken";
+                            }
+                            else{
+                                firebase.database().ref().child('usersprofile').child(username).set({
+                                    cardHolder: cardholder,
+                                    cardNumber: cardnumber,
+                                    cvc: CVC,
+                                    day: day,
+                                    email: email,
+                                    experation: expo,
+                                    month: month,
+                                    password: password,
+                                    username: username,
+                                    year: year,
+                                    currentVD: currentVD,
+                                    startD: startD
+                                });
+                                firebase.database().ref().child('userProfileViews').child(username).child('Podcast').set({
+                                action: "999999999999999999",
+                                adventure: "999999999999999999",
+                                animation: "999999999999999999",
+                                blues: "999999999999999999",
+                                classical: "999999999999999999",
+                                comedy: "999999999999999999",
+                                country: "999999999999999999",
+                                crime: "999999999999999999",
+                                drama: "999999999999999999",
+                                educational: "999999999999999999",
+                                family: "999999999999999999",
+                                hiphop: "999999999999999999",
+                                history: "999999999999999999",
+                                horror: "999999999999999999",
+                                jazz: "999999999999999999",
+                                latin: "999999999999999999",
+                                metal: "999999999999999999",
+                                musical: "999999999999999999",
+                                mystery: "999999999999999999",
+                                news: "999999999999999999",
+                                other: "999999999999999999",
+                                pop: "999999999999999999",
+                                randB: "999999999999999999",
+                                rap: "999999999999999999",
+                                rock: "999999999999999999",
+                                romance: "999999999999999999",
+                                sciFi: "999999999999999999",
+                                soul: "999999999999999999",
+                                sports: "999999999999999999",
+                                thriller: "999999999999999999",
+                                war: "999999999999999999"
+                            });
+                                firebase.database().ref().child('userProfileViews').child(username).child('Music').set({
+                                action: "999999999999999999",
+                                adventure: "999999999999999999",
+                                animation: "999999999999999999",
+                                blues: "999999999999999999",
+                                classical: "999999999999999999",
+                                comedy: "999999999999999999",
+                                country: "999999999999999999",
+                                crime: "999999999999999999",
+                                drama: "999999999999999999",
+                                educational: "999999999999999999",
+                                family: "999999999999999999",
+                                hiphop: "999999999999999999",
+                                history: "999999999999999999",
+                                horror: "999999999999999999",
+                                jazz: "999999999999999999",
+                                latin: "999999999999999999",
+                                metal: "999999999999999999",
+                                musical: "999999999999999999",
+                                mystery: "999999999999999999",
+                                news: "999999999999999999",
+                                other: "999999999999999999",
+                                pop: "999999999999999999",
+                                randB: "999999999999999999",
+                                rap: "999999999999999999",
+                                rock: "999999999999999999",
+                                romance: "999999999999999999",
+                                sciFi: "999999999999999999",
+                                soul: "999999999999999999",
+                                sports: "999999999999999999",
+                                thriller: "999999999999999999",
+                                war: "999999999999999999"
+                            });
+                                firebase.database().ref().child('userProfileViews').child(username).child('Movies').set({
+                                action: "999999999999999999",
+                                adventure: "999999999999999999",
+                                animation: "999999999999999999",
+                                blues: "999999999999999999",
+                                classical: "999999999999999999",
+                                comedy: "999999999999999999",
+                                country: "999999999999999999",
+                                crime: "999999999999999999",
+                                drama: "999999999999999999",
+                                educational: "999999999999999999",
+                                family: "999999999999999999",
+                                hiphop: "999999999999999999",
+                                history: "999999999999999999",
+                                horror: "999999999999999999",
+                                jazz: "999999999999999999",
+                                latin: "999999999999999999",
+                                metal: "999999999999999999",
+                                musical: "999999999999999999",
+                                mystery: "999999999999999999",
+                                news: "999999999999999999",
+                                other: "999999999999999999",
+                                pop: "999999999999999999",
+                                randB: "999999999999999999",
+                                rap: "999999999999999999",
+                                rock: "999999999999999999",
+                                romance: "999999999999999999",
+                                sciFi: "999999999999999999",
+                                soul: "999999999999999999",
+                                sports: "999999999999999999",
+                                thriller: "999999999999999999",
+                                war: "999999999999999999"
+                            });
+                    
+                    
+                                window.location.href = "Login.html";
+                            }
+                        });
+                    }
+                    else{
+                        if(day === ""){
+                            document.getElementById('day').value = ""
+                            document.getElementById('day').style.background = "rgb(255,50,0)";
+                            document.getElementById('day').placeholder = "dd";
+                        }
+                        if(month === ""){
+                            document.getElementById('month').value = ""
+                            document.getElementById('month').style.background = "rgb(255,50,0)";
+                            document.getElementById('month').placeholder = "mm";
+                        }
+                        if(year === ""){
+                            document.getElementById('year').value = ""
+                            document.getElementById('year').style.background = "rgb(255,50,0)";
+                            document.getElementById('year').placeholder = "yyyy";
+                        }
+                        if(email === ""){
+                            document.getElementById('email').value = ""
+                            document.getElementById('email').style.background = "rgb(255,50,0)";
+                            document.getElementById('email').placeholder = "Java@gmail.com";
+                        } 
+                        if(username === ""){
+                            document.getElementById('username').value = ""
+                            document.getElementById('username').style.background = "rgb(255,50,0)";
+                            document.getElementById('username').placeholder = "Enter a Username";
+                        } 
+                        if(password === ""){
+                            document.getElementById('password').value = ""
+                            document.getElementById('password').style.background = "rgb(255,50,0)";
+                            document.getElementById('password').placeholder = "Enter a Password";
+                        } 
+                        if(cardnumber === ""){
+                            document.getElementById('cardnumber').value = ""
+                            document.getElementById('cardnumber').style.background = "rgb(255,50,0)";
+                            document.getElementById('cardnumber').placeholder = "1234-5678-9012-3456";
+                        } 
+                        if(cardholder === ""){
+                            document.getElementById('cardholder').value = ""
+                            document.getElementById('cardholder').style.background = "rgb(255,50,0)";
+                            document.getElementById('cardholder').placeholder = "name";
+                        } 
+                        if(CVC === ""){
+                            document.getElementById('CVC').value = ""
+                            document.getElementById('CVC').style.background = "rgb(255,50,0)";
+                            document.getElementById('CVC').placeholder = "012";
+                        } 
+                        if(expo === ""){
+                            document.getElementById('expo').value = ""
+                            document.getElementById('expo').style.background = "rgb(255,50,0)";
+                            document.getElementById('expo').placeholder = "mm-yyyy";
+                        }
+                    }
+                };
+</script>
+            
+	 </form>
+	 
+   </section>
+   <footer >
+        <a href="" class="facebook"><i class="fa fa-facebook" ></i></a>
+        <a href="" class="fa fa-google" id="google"></a>
+	</footer>
+</body>
+    
+    
+    
+</html>

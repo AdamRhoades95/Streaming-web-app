@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <!--
+             Providers
+             Author: Adam Rhoades
+             Date:   6/5/2021
+        -->
+
+        <title>Magnate Streaming Service</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />  
+        <link rel="stylesheet" href="css/tf_styles1.css">
+        <link rel="stylesheet" href="css/tf_flex.css">
+        <link rel="stylesheet" href="css/tf_reset.css">
+        <link rel="stylesheet" href="css/tf_navicon.css">
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <script>
+            var file = sessionStorage.getItem("file");
+            var audio = new Audio(file);
+            var index = 0;
+            
+            var user = sessionStorage.getItem("user");
+                        var count = sessionStorage.getItem("count");
+                        var bigNum = BigInt(count.toString());
+                        var type = sessionStorage.getItem("type");
+                        var file = sessionStorage.getItem("file");
+                        var viewers = sessionStorage.getItem("viewers");
+            
+            audio.addEventListener('ended',function(){
+               //when song is over
+               changeSong(0);
+               
+            },true);
+            
+            
+            
+            function changeSong(x){
+                if (x == 0){
+                    index +=1; 
+                    alert(index);
+                }
+                if(x == 1){
+                    index -=1; 
+                    alert(index);
+                }
+                
+               
+                
+                document.getElementById('icon').src = iconURLsArr[index];
+                document.getElementById('title').innerHTML = titleArr[index];
+                document.getElementById('author').innerHTML = "Author: "+authorArr[index];
+                document.getElementById('description').innerHTML ="Description: " + descriptArr[index];
+                audio = new Audio(fileURLsArr[index]);
+                audio.play();
+                audio.addEventListener('ended',function(){
+                    //when song is over
+                    changeSong(0);
+                },true);
+            };
+            
+        </script>
+        <section style="width:100%; background: black; text-align: center; margin: auto; left: 0; right: 0; top: 0; bottom: 0;padding: 0px; ">
+            <div class="row" style="margin: auto; padding: 0px; text-align: center; width:600px; display: flex;">
+                <div class="column" style="margin: 0px; padding: 0px;" >
+                    <img src="img/back.png" onclick="back()" style="width: 75px; height: 75px;" id="back">
+                </div>
+                <div class="column" style="margin: 0px; padding: 0px;">
+                    <img style="width: 500px; height: 500px;" id="icon">
+                </div>
+            </div>
+            
+            <div class="row" style="margin: auto; padding: 0px; width:285px; display: flex;">
+                <div class="column" style="margin: auto; padding: 10px; width: auto;" >
+                    <img src="img/previousicon.png" onclick="previous()" style="margin: auto; padding: 0px; width: 75px; height: 75px;" id="prev">
+                </div>
+                <div class="column" style="margin: auto; padding: 10px; width: auto;" >
+                    <img src="img/play.png" onclick="playpause()" style="margin: auto; padding: 0px;width: 75px; height: 75px;" id="play">
+                </div>
+                <div class="column" style="margin: auto; padding: 10px; width: auto;" >
+                    <img src="img/nexticon.png" onclick="next()" style="width: 75px; height: 75px; margin: auto; padding: 0px;" id="next">
+                </div>
+            </div>
+            <div class="row" style=" width:575px; padding:5px 5px 5px 90px; margin:auto;">
+                <div class="column" style="width:auto; padding:5px 5px 5px 5px; margin:0px 5px 0px 5px;">
+                    <p id="title" style="text-align: center; color:white; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:350px;"  ></p>
+                </div>
+                <div class="column" style="width:350px; padding:5px 5px 5px 5px; margin:0px 5px 0px 5px;">
+                    <p id="author" style="text-align: left; color:white; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:350px;">Author: </p>
+                </div>
+                <div class="column" style="width:350px; padding:5px 5px 5px 5px; margin:0px 5px 0px 5px;">
+                    <p id="description" style=" text-align: left; color:white; padding:5px 5px 5px 5px;margin:5px 5px 5px 5px; width:350px;">Description: </p>
+                </div>
+            </div>
+            
+            
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+            <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-app.js"></script>
+
+            <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+            <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-database.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
+            <script>
+                var firebaseConfig = {
+                apiKey: "AIzaSyBKpk7-U_TkE3IApTOZFSMNIXuOg-PYPFs",
+                authDomain: "kims-streamer.firebaseapp.com",
+                databaseURL: "https://kims-streamer-default-rtdb.firebaseio.com",
+                projectId: "kims-streamer",
+                storageBucket: "kims-streamer.appspot.com",
+                messagingSenderId: "1059071438295",
+                appId: "1:1059071438295:web:71a7266e044585eb61ef92",
+                measurementId: "G-J3LQRTX4SH"
+                };
+                                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                firebase.analytics();
+                var p = 0;
+                var first = 0;
+                var playbtn = document.getElementById('play');
+                function back(){
+                    var page = sessionStorage.getItem("p");
+                    var type = sessionStorage.getItem("type");
+                    
+                    if(page == 0){
+                        window.location.href = "MSS_Home.html";
+                    }
+                    else if(type === "Music"){
+                        window.location.href = "MSS_Music.html";
+                    }
+                    else{
+                        window.location.href = "MSS_Podcast.html";
+                    }
+                };
+                function previous(){
+                    audio.pause();
+                    var time = audio.currentTime%1;
+                    
+                    if (time>5){
+                        audio.currentTime = 0;
+                    }
+                    else{
+                        changeSong(1);
+                    }
+                    audio.play();
+                };
+                function playpause(){
+                    if(first === 0){
+                        
+                        
+                        first += 1;
+                        
+                        var query = firebase.database().ref('uploads').child(type);
+                        
+                        query.once("value").then(function(snapshot) {
+                            snapshot.forEach(function(childSnapshot) {
+                                if(childSnapshot.val().fileUrl === file){
+                                    var tags = childSnapshot.val().tags;
+                                    
+                                    bigNum -=BigInt('1');
+                                    
+                                    if(viewers.includes("_"+ user +"_")){
+                                        
+                                    }
+                                    else{
+                                        viewers += ("_"+ user +"_");
+                                        childSnapshot.ref.update({
+                                            viewers: viewers
+                                        }); 
+                                    }
+                                    childSnapshot.ref.update({
+                                        count: bigNum.toString()
+                                    }); 
+                                    
+                                    if (tags.includes( "drama")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().drama;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                drama: bigVal.toString()
+                                            });
+                                        });
+                                    }
+                                    if (tags.includes("comedy")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().comedy;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                comedy: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "thriller")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().thriller;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                thriller: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "romance")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().romance;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                romance: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "action")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().action;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                action: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "horror")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().horror;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                horror: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "crime")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().crime;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                crime: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "adventure")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().adventure;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                adventure: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "mystery")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().mystery;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                mystery: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "family")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().family;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                family: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "war")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().war;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                war: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "eductational")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().educational;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                educational: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "history")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().history;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                history: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "sciFi")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().sciFi;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                sciFi: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "musical")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().musical;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                musical: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "animation")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().animation;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                animation: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "sports")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().sports;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                sports: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "news")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().news;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                news: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "other")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().other;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                other: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "blues")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().blues;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                blues: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "classical")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().classical;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                classical: bigVal.toString()
+                                            });
+                                        });
+                                    } 
+                                    if (tags.includes( "country")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().country;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                country: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "jazz")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().jazz;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                jazz: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "hiphop")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().hiphop;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                hiphop: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "soul")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().soul;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                soul: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "rock")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().rock;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                rock: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "pop")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().pop;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                pop: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "randB")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().randB;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                randB: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "latin")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().latin;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                latin: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "metal")) {;
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().metal;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                metal: bigVal.toString()
+                                            });
+                                        });
+                                    }  
+                                    if (tags.includes( "rap")) {
+                                        var query1 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                        query1.once("value").then(function(snapshot) {
+                                            var value = snapshot.val().rap;
+                                            var bigVal = BigInt(value.toString())- BigInt('1');
+                                            var query2 = firebase.database().ref('userProfileViews').child(user).child(type);
+                                            query2.update({
+                                                rap: bigVal.toString()
+                                            });
+                                        });
+                                    }
+                                    
+                                }
+                            });
+                        });
+                        
+                    }
+                    
+                    if(p === 0){
+                        playbtn.src = "img/pause.png";
+                        p++;
+                        audio.play();
+                    }
+                    else{
+                        playbtn.src = "img/play.png";
+                        p = 0;
+                        audio.pause();
+                    }
+                };
+                function next(){
+                    
+                    audio.currentTime = audio.duration;
+                };
+            </script>
+        </section>
+        <script>
+            
+            document.getElementById('icon').src = sessionStorage.getItem("icon");
+            document.getElementById('title').innerHTML += sessionStorage.getItem("title");
+            document.getElementById('author').innerHTML += sessionStorage.getItem("author");
+            document.getElementById('description').innerHTML += sessionStorage.getItem("detail");
+            var count = sessionStorage.getItem("count");
+            
+            
+            var titleArr = new Array(sessionStorage.getItem("title"));
+            var authorArr = new Array(sessionStorage.getItem("author"));
+            var descriptArr = new Array(sessionStorage.getItem("detail"));
+            var iconURLsArr = new Array(sessionStorage.getItem("icon"));
+            var fileURLsArr = new Array(sessionStorage.getItem("file"));
+            var viewersArr = new Array(sessionStorage.getItem("viewers"));
+            var countArr = new Array(BigInt(count.toString()));
+            var tags = sessionStorage.getItem("tags")
+            var tagsArr = new Array(tags);
+            
+            
+            var setqueryind = 1;
+            var fle =sessionStorage.getItem("file")
+            
+            var playlistQuery = firebase.database().ref().child('uploads').child(type);
+            
+            
+            playlistQuery.once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var val = childSnapshot.val().tags
+                    var fle2 = childSnapshot.val().fileUrl;
+                    if(tags.includes("drama")&& val.includes("drama")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("rap")&& val.includes("rap")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("metal")&& val.includes("metal")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("latin")&& val.includes("latin")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("randB")&& val.includes("randB")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("pop")&& val.includes("pop")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("rock")&& val.includes("rock")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("soul")&& val.includes("soul")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("hiphop")&& val.includes("hiphop")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("jazz")&& val.includes("jazz")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("country")&& val.includes("country")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("classical")&& val.includes("classical")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("blues")&& val.includes("blues")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("news")&& val.includes("news")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("sports")&& val.includes("sports")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("animation")&& val.includes("animation")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("musical")&& val.includes("musical")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("sciFi")&& val.includes("sciFi")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("history")&& val.includes("history")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("educational")&& val.includes("educational")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("war")&& val.includes("war")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("family")&& val.includes("family")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("mystery")&& val.includes("mystery")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("adventure")&& val.includes("adventure")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("adventure")&& val.includes("adventure")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("crime")&& val.includes("crime")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("horror")&& val.includes("horror")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("action")&& val.includes("action")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("romance")&& val.includes("romance")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("thriller")&& val.includes("thriller")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    if(tags.includes("comedy")&& val.includes("comedy")&& !fileURLsArr.includes(fle2)){
+                        titleArr[setqueryind] = childSnapshot.val().name;
+                        authorArr[setqueryind] = childSnapshot.val().author;
+                        descriptArr[setqueryind] = childSnapshot.val().descript;
+                        iconURLsArr[setqueryind] = childSnapshot.val().imageUrl;
+                        fileURLsArr[setqueryind] = fle2;
+                        viewersArr[setqueryind] = childSnapshot.val().viewers;
+                        countArr[setqueryind] = BigInt(childSnapshot.val().count);
+                        tagsArr[setqueryind] = val;
+                        setqueryind +=1;
+                    }
+                    alert(titleArr);
+                    
+                    
+                    
+                });
+            });
+            
+        </script>
+        
+        
+        <footer  style="height:50px">
+            <a href="" class="facebook"><i class="fa fa-facebook" ></i></a>
+            <a href="" class="fa fa-google" id="google"></a>
+        </footer>
+    </body>
+</html>
